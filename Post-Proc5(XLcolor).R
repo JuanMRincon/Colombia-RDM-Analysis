@@ -21,21 +21,18 @@ library(tidyr)
 library('metis')
 library(reshape)
 library(data.table)
-# Function to make ghg Anually
-Total<-function(Query){
-  h<- Query%>%group_by(scenario, region, experiment, old_scen_name,Units, year,Metric) %>%summarize(value=sum(value))
-  assign(paste("T",deparse(substitute(Query)),sep = ""), h,envir = globalenv())
-}
+
 # Function calculate rate from queries
 rate<-function(Query){
   g<- Query%>% mutate(Metric=paste(unique(Query$Metric),"Rate"))
   h1<-g[-c(1), ]
   h2<-g[-c(length(g$scenario)), ]
   h<-cbind(h1,h2)%>%mutate(value=(value-value1)/(year-year1))
-  h<-h[c(1:8)]%>% mutate(Units="MTCO2/yr")
+  h<-h[c(1:4,6:8)]%>% mutate(Units="MTCO2/yr")
   assign(paste("rate",deparse(substitute(Query)),sep = ""), h,envir = globalenv())
   
 }
+
 # Function to make Cumulative queries
 Cumulative<-function(Query){
   h<- Query%>%filter(year %in%(2020:2050))%>% mutate(Metric=paste("Cumulative" ,unique(Query$Metric)))
@@ -43,6 +40,14 @@ Cumulative<-function(Query){
   assign(paste("c",deparse(substitute(Query)),sep = ""), h,envir = globalenv())
   
 }
+
+# Function to make Cumulative queries
+addXL<-function(Query){
+  h<- Query%>% left_join(DDPXL, by=c("experiment"))
+  assign(paste(deparse(substitute(Query)),sep = ""), h,envir = globalenv())
+  
+}
+
 # Function to make same starting point
 Start2015<-function(Query){
   h<- list()
@@ -55,6 +60,8 @@ Start2015<-function(Query){
   q <- rbindlist(h)
   assign(paste(deparse(substitute(Query)),sep = ""), q,envir = globalenv())
 }
+
+
 
 # Function to make plots
 line_plot <- function(plot_df, fig_path, plot_scens, y_lbl=NULL,
@@ -133,7 +140,7 @@ line_plot <- function(plot_df, fig_path, plot_scens, y_lbl=NULL,
       ,plot.title=          element_text(face="bold", hjust=0.2, vjust = -4, margin = margin(b=20), size=8)
     )
   
-  p<-ggplot(plot_df) + geom_line(aes(x=year, y=value, colour=scenario, group=experiment)) +#, group=experiment
+  p<-ggplot(plot_df) + geom_line(aes(x=year, y=value, colour=Colombia_Nuclear, group=experiment)) +#, group=experiment colour=Global_CCS_Cost Colombia_Nuclear
     scale_colour_manual(values=c('dodgerblue3','black','gray','dodgerblue'))
   p <- p + xlab("") + ylab(paste(plot_df$Metric[1],' (',plot_df$Units[1],')',sep = ""))
   p<-p + scale_x_continuous(limits=c(x_min, x_max))
@@ -149,12 +156,14 @@ title <- ''
 x_min <- 2015
 x_max <- 2050
 
+#Import uncertainties and levers changes table
+DDPXL<-read.csv('C:/Users/Juan Manuel Rincon R/Desktop/Colombia-RDM-Analysis/DOE_XLRM_DDP_XL.csv', header = TRUE, sep = ",", dec = ".")%>%mutate(experiment=as.character(experiment),scenario=NULL)
+
 
 #Import Reference tables
-GWP<-read.csv('C:/Users/Juan Manuel Rincon R/Desktop/Colombia-RDM-Analysis/GWP.csv', header = TRUE, sep = ",", dec = ".")
-#Import Reference tables
-CF<-read.csv('C:/Users/Juan Manuel Rincon R/Desktop/Colombia-RDM-Analysis/CorreccionFactor.csv', header = TRUE, sep = ",", dec = ".")
+GWP<-read.csv('C:/Users/Juan Manuel Rincon R/OneDrive - Universidad de los andes/Modelacion Energetica/RDM Analisis R/ReferenceTables/GWP.csv', header = TRUE, sep = ",", dec = ".")
 #####VKT
+load_factors <- read.csv('C:/Users/Juan Manuel Rincon R/Desktop/Colombia-RDM-Analysis/L254.StubTranTechLoadFactor.csv', skip=1) %>% filter(region == "Colombia")  
 ##load_factors%>%rename(sector=supplysector, subsector = tranSubsector, technology = stub.technology)
 names(load_factors)[2]<-"sector"
 names(load_factors)[3]<-"subsector"
@@ -162,21 +171,19 @@ names(load_factors)[4]<-"technology"
 
 
 base_dir <- c('C:/Users/Juan Manuel Rincon R/Desktop/Colombia-RDM-Analysis/query_proj_06_22_2020/')
-export_dir <- c('C:/Users/Juan Manuel Rincon R/OneDrive - Universidad de los andes/Modelacion Energetica/RDM Analisis R/3DDPScenariosv1/')
 #Query names in folder
 qries<-list.files(base_dir)
+
+
 
 for (qry in qries){
   prj_path <- paste0(base_dir, qry)
   prj <- loadProject(prj_path)
   if(qry=="CO2 emissions by sector (no bio).proj"){
-    Co2<-prj$data$`CO2 emissions by sector (no bio)`%>% mutate(value=(44/12)*value,ghg="CO2") 
     co2<-prj$data$`CO2 emissions by sector (no bio)`%>% mutate(Metric="CO2 Emissions",Units="MTCO2") %>% group_by(scenario, region, experiment, old_scen_name, Units,year, Metric) %>%summarize(value=(44/12)*sum(value))
-    Cumulative(CO2)
-    rate(CO2)
-    
-    
-  }
+    Cumulative(co2)
+    rate(co2)
+    }
   if(qry=="nonCO2 emissions by resource production.proj"){
     Non2<-prj$data$`nonCO2 emissions by resource production`%>% mutate(sector=prj$data$`nonCO2 emissions by resource production`$resource,resource=NULL)
   }
@@ -330,20 +337,22 @@ for (qry in qries){
                    as_tibble(TCO2eqFrght),as_tibble(TCO2eqFug),as_tibble(TCO2eqFs),as_tibble(TCO2eqHh),as_tibble(TCO2eqIE),as_tibble(TCO2eqIP),as_tibble(TCO2eqLs),as_tibble(TCO2eqPass),
                    as_tibble(TCO2eqPower),as_tibble(TCO2eqRef),as_tibble(TCO2eqWst),as_tibble(N2O),as_tibble(CH4),as_tibble(NOx),as_tibble(SO2))
     Start2015(Metrics)
+    addXL(Metrics)
     for (i in seq(length(unique(Metrics$Metric)))) {
       M<-Metrics%>% filter(Metric %in% c(unique(Metrics$Metric)[i]))
       plot_df <- M
-      fig_path <- c(paste(export_dir,unique(Metrics$Metric)[i],'.png',sep = ""))
+      fig_path <- c(paste('C:/Users/Juan Manuel Rincon R/OneDrive - Universidad de los andes/Modelacion Energetica/RDM Analisis R/3DDPScenariosv1/',unique(Metrics$Metric)[i],'.png',sep = ""))
       y_lbl <- paste(M$Metric[1],' (',M$Units[1],')',sep = "")
       line_plot(plot_df, fig_path, plot_scens, y_lbl=y_lbl, x_lbl=x_lbl, title=title, x_min=x_min, x_max=x_max, legend_on=TRUE)
     }
     Metrics<-rbind(as_tibble(cCO2),as_tibble(cnonco2),as_tibble(cGHG),as_tibble(cTCO2eqAg),as_tibble(cTCO2eqBk),as_tibble(cTCO2eqComm),as_tibble(cTCO2eqFrght),
                    as_tibble(cTCO2eqFug),as_tibble(cTCO2eqFs),as_tibble(cTCO2eqHh),as_tibble(cTCO2eqIE),as_tibble(cTCO2eqIP),as_tibble(cTCO2eqLs),as_tibble(cTCO2eqPass),
                    as_tibble(cTCO2eqPower),as_tibble(cTCO2eqRef),as_tibble(cTCO2eqWst),as_tibble(cN2O),as_tibble(cCH4),as_tibble(cNOx),as_tibble(cSO2))
+    addXL(Metrics)
     for (i in seq(length(unique(Metrics$Metric)))) {
       M<-Metrics%>% filter(Metric %in% c(unique(Metrics$Metric)[i]))
       plot_df <- M
-      fig_path <- c(paste(export_dir,'Cumulative/',unique(Metrics$Metric)[i],'.png',sep = ""))
+      fig_path <- c(paste('C:/Users/Juan Manuel Rincon R/OneDrive - Universidad de los andes/Modelacion Energetica/RDM Analisis R/3DDPScenariosv1/Cumulative/',unique(Metrics$Metric)[i],'.png',sep = ""))
       y_lbl <- paste(M$Metric[1],' (',M$Units[1],')',sep = "")
       line_plot(plot_df, fig_path, plot_scens, y_lbl=y_lbl, x_lbl=x_lbl, title=title, x_min=x_min, x_max=x_max, legend_on=TRUE)
     }
@@ -356,7 +365,8 @@ for (qry in qries){
       group_by(scenario, region, experiment, old_scen_name, year) %>%
       summarize(value=(44/12)*sum(value)) %>% mutate(Metric="LUC Emissions",Units="MTCO2")
     Start2015(LUC)
-    fig_path <- c(paste(export_dir,LUC$Metric[1],'.png',sep = ""))
+    addXL(LUC)
+    fig_path <- c(paste('C:/Users/Juan Manuel Rincon R/OneDrive - Universidad de los andes/Modelacion Energetica/RDM Analisis R/3DDPScenariosv1/',LUC$Metric[1],'.png',sep = ""))
     y_lbl <- paste(LUC$Metric[1],' (',LUC$Units[1],')',sep = "")
     line_plot(LUC, fig_path, plot_scens, y_lbl=y_lbl, x_lbl=x_lbl, title=title, x_min=x_min, x_max=x_max, legend_on=TRUE)
     rm(LUC)
@@ -373,10 +383,11 @@ for (qry in qries){
       group_by(scenario, region, experiment, old_scen_name,Units, year) %>%
       summarize(value=sum(value))%>% mutate(Metric="Agricultural lands")
     Metrics<-rbind(as_tibble(biomassland),as_tibble(cropland),as_tibble(biomasscropland))
+    addXL(Metrics)
     for (i in seq(length(unique(Metrics$Metric)))) {
       M<-Metrics%>% filter(Metric %in% c(unique(Metrics$Metric)[i]))
       plot_df <- M
-      fig_path <- c(paste(export_dir,unique(Metrics$Metric)[i],'.png',sep = ""))
+      fig_path <- c(paste('C:/Users/Juan Manuel Rincon R/OneDrive - Universidad de los andes/Modelacion Energetica/RDM Analisis R/3DDPScenariosv1/',unique(Metrics$Metric)[i],'.png',sep = ""))
       y_lbl <- paste(M$Metric[1],' (',M$Units[1],')',sep = "")
       line_plot(plot_df, fig_path, plot_scens, y_lbl=y_lbl, x_lbl=x_lbl, title=title, x_min=x_min, x_max=x_max, legend_on=TRUE)}
     rm(biomassland,cropland,biomasscropland)  
@@ -386,7 +397,8 @@ for (qry in qries){
         group_by(scenario, region, experiment, old_scen_name,Units, year) %>%
         summarize(value=sum(value))%>%  filter(region %in% c("Colombia"))%>%mutate(Metric="Water Demand")
       Start2015(waterconsump)
-      fig_path <- c(paste(export_dir,waterconsump$Metric[1],'.png',sep = ""))
+      addXL(waterconsump)
+      fig_path <- c(paste('C:/Users/Juan Manuel Rincon R/OneDrive - Universidad de los andes/Modelacion Energetica/RDM Analisis R/3DDPScenariosv1/',waterconsump$Metric[1],'.png',sep = ""))
       y_lbl <- paste(waterconsump$Metric[1],' (',waterconsump$Units[1],')',sep = "")
       line_plot(waterconsump, fig_path, plot_scens, y_lbl=y_lbl, x_lbl=x_lbl, title=title, x_min=x_min, x_max=x_max, legend_on=TRUE)
       rm(waterconsump)
@@ -394,6 +406,7 @@ for (qry in qries){
   if(qry=="prices of all markets.proj"){
       price<- prj$data$`prices of all markets`%>%group_by(scenario, region, experiment, old_scen_name,Units, year,market) %>%
         filter(market %in% c("globalcrude oil","ColombiaBeef","globalRice","globalWheat"))
+      rm(prj)
       #**********#######Oil prices ###########
       oilprice2015<-price%>%filter(market %in% c("globalcrude oil"),year %in% c("2015"))%>%
         group_by(scenario, region, experiment, old_scen_name) %>%summarize(value=sum(value))
@@ -419,10 +432,12 @@ for (qry in qries){
         group_by(scenario, region, experiment, old_scen_name, year) %>%summarize(value=sum(value))%>%left_join(wheatprice2015, by=c("scenario","region","experiment","old_scen_name"))%>%
         mutate(value=((value.x-value.y)/value.y)+1,Units="2015 reference",Metric="Wheat price",value.x=NULL,value.y=NULL)
       Metrics<-rbind(as_tibble(oilprice),as_tibble(beefprice),as_tibble(riceprice),as_tibble(wheatprice))
+      Start2015(Metrics)
+      addXL(Metrics)
       for (i in seq(length(unique(Metrics$Metric)))) {
         M<-Metrics%>% filter(Metric %in% c(unique(Metrics$Metric)[i]))
         plot_df <- M
-        fig_path <- c(paste(export_dir,unique(Metrics$Metric)[i],'.png',sep = ""))
+        fig_path <- c(paste('C:/Users/Juan Manuel Rincon R/OneDrive - Universidad de los andes/Modelacion Energetica/RDM Analisis R/3DDPScenariosv1/',unique(Metrics$Metric)[i],'.png',sep = ""))
         y_lbl <- paste(M$Metric[1],' (',M$Units[1],')',sep = "")
         line_plot(plot_df, fig_path, plot_scens, y_lbl=y_lbl, x_lbl=x_lbl, title=title, x_min=x_min, x_max=x_max, legend_on=TRUE)}
       rm(price,oilprice2015,oilprice,beefprice,beefprice2015,riceprice,riceprice2015,wheatprice,wheatprice2015)
@@ -432,7 +447,8 @@ for (qry in qries){
           group_by(scenario, region, experiment, old_scen_name,Units, year) %>%
           summarize(value=sum(value))%>%mutate(Metric="Final Energy")
         Start2015(FinalEnergy)
-        fig_path <- c(paste(export_dir,FinalEnergy$Metric[1],'.png',sep = ""))
+        addXL(FinalEnergy)
+        fig_path <- c(paste('C:/Users/Juan Manuel Rincon R/OneDrive - Universidad de los andes/Modelacion Energetica/RDM Analisis R/3DDPScenariosv1/',FinalEnergy$Metric[1],'.png',sep = ""))
         y_lbl <- paste(FinalEnergy$Metric[1],' (',FinalEnergy$Units[1],')',sep = "")
         line_plot(FinalEnergy, fig_path, plot_scens, y_lbl=y_lbl, x_lbl=x_lbl, title=title, x_min=x_min, x_max=x_max, legend_on=TRUE)
         rm(FinalEnergy)
@@ -449,10 +465,11 @@ for (qry in qries){
         TradBio$Metric<-"Building Trad. Biomass"
         TradBio$Units<- "%"
         Start2015(TradBio)
-        fig_path <- c(paste(export_dir,TradBio$Metric[1],'.png',sep = ""))
+        addXL(TradBio)
+        fig_path <- c(paste('C:/Users/Juan Manuel Rincon R/OneDrive - Universidad de los andes/Modelacion Energetica/RDM Analisis R/3DDPScenariosv1/',TradBio$Metric[1],'.png',sep = ""))
         y_lbl <- paste(TradBio$Metric[1],' (',TradBio$Units[1],')',sep = "")
         line_plot(TradBio, fig_path, plot_scens, y_lbl=y_lbl, x_lbl=x_lbl, title=title, x_min=x_min, x_max=x_max, legend_on=TRUE)
-        
+        rm(TradBio)
   }
   if(qry=="transport final energy by fuel.proj"){
         trnEnergy<-prj$data$`transport final energy by fuel` %>%
@@ -466,7 +483,8 @@ for (qry in qries){
         elecPrice<-elecPrice%>%left_join(price2015, by=c("scenario","region","experiment","old_scen_name"))%>%
           mutate(value=((value.x-value.y)/value.y)+1,Units="2015 reference",Metric="Elec. price",value.x=NULL,value.y=NULL,fuel=NULL)
         Start2015(elecPrice)
-        fig_path <- c(paste(export_dir,elecPrice$Metric[1],'.png',sep = ""))
+        addXL(elecPrice)
+        fig_path <- c(paste('C:/Users/Juan Manuel Rincon R/OneDrive - Universidad de los andes/Modelacion Energetica/RDM Analisis R/3DDPScenariosv1/',elecPrice$Metric[1],'.png',sep = ""))
         y_lbl <- paste(elecPrice$Metric[1],' (',elecPrice$Units[1],')',sep = "")
         line_plot(elecPrice, fig_path, plot_scens, y_lbl=y_lbl, x_lbl=x_lbl, title=title, x_min=x_min, x_max=x_max, legend_on=TRUE)
         rm(elecPrice)
@@ -500,11 +518,11 @@ for (qry in qries){
     TotVKT<-VKT %>%  group_by(scenario, region, experiment, old_scen_name, Units, year) %>% summarize(value=sum(vkt))%>% mutate(Metric = "EV VKT")
     TotVKT$Units<-"%"
     TotVKT$value<-(EVVKT$value/TotVKT$value)*100
-    #####number of EV they are 140000 for every year (fix)
-    #vkt_veh_yr <- read.csv('C:/Users/Juan Manuel Rincon R/OneDrive - Universidad de los andes/Modelacion Energetica/RDM Analisis R/UCD_trn_data_CORE.csv', skip=7) %>% filter(UCD_region == "Latin America",unit=="vkt/veh/yr",mode=="LDV_4W")
-    #names(vkt_veh_yr)[4]<-'subsector'
-    #vkt_veh_yr2<-melt(vkt_veh_yr, id.vars=c("UCD_region", "UCD_sector", "mode" , "subsector", "UCD_technology", "UCD_fuel","variable","unit" ),variable.name = c("year"))
-    #vkt_veh_yr2$year<-as.numeric(substring(vkt_veh_yr2$year,2))
+    #####number of EV
+    vkt_veh_yr <- read.csv('C:/Users/Juan Manuel Rincon R/OneDrive - Universidad de los andes/Modelacion Energetica/RDM Analisis R/UCD_trn_data_CORE.csv', skip=7) %>% filter(UCD_region == "Latin America",unit=="vkt/veh/yr",mode=="LDV_4W")
+    names(vkt_veh_yr)[4]<-'subsector'
+    vkt_veh_yr2<-melt(vkt_veh_yr, id.vars=c("UCD_region", "UCD_sector", "mode" , "subsector", "UCD_technology", "UCD_fuel","variable","unit" ),variable.name = c("year"))
+    vkt_veh_yr2$year<-as.numeric(substring(vkt_veh_yr2$year,2))
     
     prj$data$`transport service output by tech` %>%  filter(sector == "trn_pass_road_LDV_4W",technology%in% c("BEV"))%>%
       left_join(load_factors, by = c("region","sector", "subsector", "technology", "year")) %>%  mutate(vehicles = (value / loadFactor / 14000)*(10**3),Metric = "Cumulative Elec. vehicles",Units="Thous #")  %>%
@@ -569,10 +587,11 @@ for (qry in qries){
     Metrics<-rbind(as_tibble(TotVKT),as_tibble(Evehicles),as_tibble(Congestioncost),as_tibble(Accidentalcost),as_tibble(Damagecost),as_tibble(Pollutantcost),as_tibble(TrnExternalities)
                    ,as_tibble(Congestioncostvkt),as_tibble(Accidentalcostpkt),as_tibble(Damagecostvkt),as_tibble(Pollutantcostvkt))
     Start2015(Metrics)
+    addXL(Metrics)
     for (i in seq(length(unique(Metrics$Metric)))) {
       M<-Metrics%>% filter(Metric %in% c(unique(Metrics$Metric)[i]))
       plot_df <- M
-      fig_path <- c(paste(export_dir,unique(Metrics$Metric)[i],'.png',sep = ""))
+      fig_path <- c(paste('C:/Users/Juan Manuel Rincon R/OneDrive - Universidad de los andes/Modelacion Energetica/RDM Analisis R/3DDPScenariosv1/',unique(Metrics$Metric)[i],'.png',sep = ""))
       y_lbl <- paste(M$Metric[1],' (',M$Units[1],')',sep = "")
       line_plot(plot_df, fig_path, plot_scens, y_lbl=y_lbl, x_lbl=x_lbl, title=title, x_min=x_min, x_max=x_max, legend_on=TRUE)}
     rm(TotVKT,Evehicles)  
@@ -619,10 +638,11 @@ for (qry in qries){
     
     Metrics<-rbind(as_tibble(PowGenHydroGW),as_tibble(PowGenRenewGW),as_tibble(PowGenRenewIntGW),as_tibble(PowGenHydro),as_tibble(PowGenRenew),as_tibble(PowGenRenewInt))
     Start2015(Metrics)
+    addXL(Metrics)
     for (i in seq(length(unique(Metrics$Metric)))) {
       M<-Metrics%>% filter(Metric %in% c(unique(Metrics$Metric)[i]))
       plot_df <- M
-      fig_path <- c(paste(export_dir,unique(Metrics$Metric)[i],'.png',sep = ""))
+      fig_path <- c(paste('C:/Users/Juan Manuel Rincon R/OneDrive - Universidad de los andes/Modelacion Energetica/RDM Analisis R/3DDPScenariosv1/',unique(Metrics$Metric)[i],'.png',sep = ""))
       y_lbl <- paste(M$Metric[1],' (',M$Units[1],')',sep = "")
       line_plot(plot_df, fig_path, plot_scens, y_lbl=y_lbl, x_lbl=x_lbl, title=title, x_min=x_min, x_max=x_max, legend_on=TRUE)}
     rm(PowGenHydroGW,PowGenRenewGW,PowGenRenewIntGW,PowGenHydro,PowGenRenew,PowGenRenewInt)
@@ -654,7 +674,8 @@ for (qry in qries){
     #passdemand<-cardemand$value+busdemand$value
     #cardemand$value<-(cardemand$value/passdemand)*100
     Start2015(busdemand)
-    fig_path <- c(paste(export_dir,busdemand$Metric[1],'.png',sep = ""))
+    addXL(busdemand)
+    fig_path <- c(paste('C:/Users/Juan Manuel Rincon R/OneDrive - Universidad de los andes/Modelacion Energetica/RDM Analisis R/3DDPScenariosv1/',busdemand$Metric[1],'.png',sep = ""))
     y_lbl <- paste(busdemand$Metric[1],' (',busdemand$Units[1],')',sep = "")
     line_plot(busdemand, fig_path, plot_scens, y_lbl=y_lbl, x_lbl=x_lbl, title=title, x_min=x_min, x_max=x_max, legend_on=TRUE)
     rm(busdemand,traindemand,cycledemand,airdemand,walkdemand,cardemand,passdemand)

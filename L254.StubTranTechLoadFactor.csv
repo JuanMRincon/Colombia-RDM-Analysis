@@ -1,4 +1,4 @@
-# Data was subsetted to model years and mapped from UCD technology to GCAM technology
+# Data was subsetted to model years and mapped from UCD technology to GCAM technology,,,,,
 region,supplysector,tranSubsector,stub.technology,year,loadFactor
 Brazil,trn_pass_road_LDV_2W,Moped,BEV,1975,1.5
 Central America and Caribbean,trn_pass_road_LDV_2W,Moped,BEV,1975,1.5
@@ -37026,3 +37026,223 @@ Taiwan,trn_pass,Passenger Rail,Tech-Adv-Liquid,2100,1152.01
 Argentina,trn_pass,Passenger Rail,Tech-Adv-Liquid,2100,250
 Colombia,trn_pass,Passenger Rail,Tech-Adv-Liquid,2100,250
 Uruguay,trn_pass,Passenger Rail,Tech-Adv-Liquid,2100,250
+Colombia,trn_freight,Freight Rail,BEV,1975,2000
+Colombia,trn_freight,Freight Rail,BEV,1990,2000
+Colombia,trn_freight,Freight Rail,BEV,2005,2000
+Colombia,trn_freight,Freight Rail,BEV,2010,2000
+Colombia,trn_freight,Freight Rail,BEV,2015,2000
+Colombia,trn_freight,Freight Rail,BEV,2020,2000
+Colombia,trn_freight,Freight Rail,BEV,2025,2000
+Colombia,trn_freight,Freight Rail,BEV,2030,2000
+Colombia,trn_freight,Freight Rail,BEV,2035,2000
+Colombia,trn_freight,Freight Rail,BEV,2040,2000
+Colombia,trn_freight,Freight Rail,BEV,2045,2000
+Colombia,trn_freight,Freight Rail,BEV,2050,2000
+Colombia,trn_freight,Freight Rail,BEV,2055,2000
+Colombia,trn_freight,Freight Rail,BEV,2060,2000
+Colombia,trn_freight,Freight Rail,BEV,2065,2000
+Colombia,trn_freight,Freight Rail,BEV,2070,2000
+Colombia,trn_freight,Freight Rail,BEV,2075,2000
+Colombia,trn_freight,Freight Rail,BEV,2080,2000
+Colombia,trn_freight,Freight Rail,BEV,2085,2000
+Colombia,trn_freight,Freight Rail,BEV,2090,2000
+Colombia,trn_freight,Freight Rail,BEV,2095,2000
+Colombia,trn_freight,Freight Rail,BEV,2100,2000
+Colombia,trn_freight,Domestic Ship,BEV,1975,1000
+Colombia,trn_freight,Domestic Ship,BEV,1990,1000
+Colombia,trn_freight,Domestic Ship,BEV,2005,1000
+Colombia,trn_freight,Domestic Ship,BEV,2010,1000
+Colombia,trn_freight,Domestic Ship,BEV,2015,1000
+Colombia,trn_freight,Domestic Ship,BEV,2020,1000
+Colombia,trn_freight,Domestic Ship,BEV,2025,1000
+Colombia,trn_freight,Domestic Ship,BEV,2030,1000
+Colombia,trn_freight,Domestic Ship,BEV,2035,1000
+Colombia,trn_freight,Domestic Ship,BEV,2040,1000
+Colombia,trn_freight,Domestic Ship,BEV,2045,1000
+Colombia,trn_freight,Domestic Ship,BEV,2050,1000
+Colombia,trn_freight,Domestic Ship,BEV,2055,1000
+Colombia,trn_freight,Domestic Ship,BEV,2060,1000
+Colombia,trn_freight,Domestic Ship,BEV,2065,1000
+Colombia,trn_freight,Domestic Ship,BEV,2070,1000
+Colombia,trn_freight,Domestic Ship,BEV,2075,1000
+Colombia,trn_freight,Domestic Ship,BEV,2080,1000
+Colombia,trn_freight,Domestic Ship,BEV,2085,1000
+Colombia,trn_freight,Domestic Ship,BEV,2090,1000
+Colombia,trn_freight,Domestic Ship,BEV,2095,1000
+Colombia,trn_freight,Domestic Ship,BEV,2100,1000
+Colombia,trn_shipping_intl,International Ship,BEV,1975,20000
+Colombia,trn_shipping_intl,International Ship,BEV,1990,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2005,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2010,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2015,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2020,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2025,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2030,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2035,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2040,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2045,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2050,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2055,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2060,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2065,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2070,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2075,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2080,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2085,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2090,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2095,20000
+Colombia,trn_shipping_intl,International Ship,BEV,2100,20000
+Colombia,trn_freight_road,Truck (0-1t),BEV,1975,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,1990,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2005,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2010,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2015,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2020,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2025,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2030,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2035,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2040,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2045,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2050,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2055,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2060,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2065,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2070,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2075,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2080,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2085,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2090,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2095,1.23
+Colombia,trn_freight_road,Truck (0-1t),BEV,2100,1.23
+Colombia,trn_freight_road,Truck (>15t),BEV,1975,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,1990,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2005,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2010,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2015,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2020,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2025,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2030,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2035,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2040,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2045,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2050,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2055,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2060,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2065,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2070,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2075,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2080,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2085,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2090,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2095,8.1
+Colombia,trn_freight_road,Truck (>15t),BEV,2100,8.1
+Colombia,trn_freight_road,Truck (6-15t),BEV,1975,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,1990,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2005,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2010,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2015,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2020,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2025,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2030,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2035,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2040,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2045,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2050,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2055,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2060,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2065,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2070,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2075,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2080,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2085,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2090,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2095,4.72
+Colombia,trn_freight_road,Truck (6-15t),BEV,2100,4.72
+Colombia,trn_pass,Domestic Aviation,BEV,1975,113.7
+Colombia,trn_pass,Domestic Aviation,BEV,1990,113.7
+Colombia,trn_pass,Domestic Aviation,BEV,2005,113.7
+Colombia,trn_pass,Domestic Aviation,BEV,2010,116.64
+Colombia,trn_pass,Domestic Aviation,BEV,2015,119.58
+Colombia,trn_pass,Domestic Aviation,BEV,2020,122.53
+Colombia,trn_pass,Domestic Aviation,BEV,2025,124.73
+Colombia,trn_pass,Domestic Aviation,BEV,2030,126.92
+Colombia,trn_pass,Domestic Aviation,BEV,2035,129.12
+Colombia,trn_pass,Domestic Aviation,BEV,2040,130.43
+Colombia,trn_pass,Domestic Aviation,BEV,2045,131.74
+Colombia,trn_pass,Domestic Aviation,BEV,2050,133.05
+Colombia,trn_pass,Domestic Aviation,BEV,2055,133.05
+Colombia,trn_pass,Domestic Aviation,BEV,2060,133.05
+Colombia,trn_pass,Domestic Aviation,BEV,2065,133.05
+Colombia,trn_pass,Domestic Aviation,BEV,2070,133.05
+Colombia,trn_pass,Domestic Aviation,BEV,2075,133.05
+Colombia,trn_pass,Domestic Aviation,BEV,2080,133.05
+Colombia,trn_pass,Domestic Aviation,BEV,2085,133.05
+Colombia,trn_pass,Domestic Aviation,BEV,2090,133.05
+Colombia,trn_pass,Domestic Aviation,BEV,2095,133.05
+Colombia,trn_pass,Domestic Aviation,BEV,2100,133.05
+Colombia,trn_aviation_intl,International Aviation,BEV,1975,204.07
+Colombia,trn_aviation_intl,International Aviation,BEV,1990,204.07
+Colombia,trn_aviation_intl,International Aviation,BEV,2005,204.07
+Colombia,trn_aviation_intl,International Aviation,BEV,2010,209.35
+Colombia,trn_aviation_intl,International Aviation,BEV,2015,214.63
+Colombia,trn_aviation_intl,International Aviation,BEV,2020,219.92
+Colombia,trn_aviation_intl,International Aviation,BEV,2025,223.86
+Colombia,trn_aviation_intl,International Aviation,BEV,2030,227.81
+Colombia,trn_aviation_intl,International Aviation,BEV,2035,231.75
+Colombia,trn_aviation_intl,International Aviation,BEV,2040,234.1
+Colombia,trn_aviation_intl,International Aviation,BEV,2045,236.45
+Colombia,trn_aviation_intl,International Aviation,BEV,2050,238.8
+Colombia,trn_aviation_intl,International Aviation,BEV,2055,238.8
+Colombia,trn_aviation_intl,International Aviation,BEV,2060,238.8
+Colombia,trn_aviation_intl,International Aviation,BEV,2065,238.8
+Colombia,trn_aviation_intl,International Aviation,BEV,2070,238.8
+Colombia,trn_aviation_intl,International Aviation,BEV,2075,238.8
+Colombia,trn_aviation_intl,International Aviation,BEV,2080,238.8
+Colombia,trn_aviation_intl,International Aviation,BEV,2085,238.8
+Colombia,trn_aviation_intl,International Aviation,BEV,2090,238.8
+Colombia,trn_aviation_intl,International Aviation,BEV,2095,238.8
+Colombia,trn_aviation_intl,International Aviation,BEV,2100,238.8
+Colombia,trn_pass_road,Bus,BEV,1975,20.65
+Colombia,trn_pass_road,Bus,BEV,1990,20.65
+Colombia,trn_pass_road,Bus,BEV,2005,20.65
+Colombia,trn_pass_road,Bus,BEV,2010,20.65
+Colombia,trn_pass_road,Bus,BEV,2015,20.65
+Colombia,trn_pass_road,Bus,BEV,2020,20.65
+Colombia,trn_pass_road,Bus,BEV,2025,20.65
+Colombia,trn_pass_road,Bus,BEV,2030,20.65
+Colombia,trn_pass_road,Bus,BEV,2035,20.65
+Colombia,trn_pass_road,Bus,BEV,2040,20.65
+Colombia,trn_pass_road,Bus,BEV,2045,20.65
+Colombia,trn_pass_road,Bus,BEV,2050,20.65
+Colombia,trn_pass_road,Bus,BEV,2055,20.65
+Colombia,trn_pass_road,Bus,BEV,2060,20.65
+Colombia,trn_pass_road,Bus,BEV,2065,20.65
+Colombia,trn_pass_road,Bus,BEV,2070,20.65
+Colombia,trn_pass_road,Bus,BEV,2075,20.65
+Colombia,trn_pass_road,Bus,BEV,2080,20.65
+Colombia,trn_pass_road,Bus,BEV,2085,20.65
+Colombia,trn_pass_road,Bus,BEV,2090,20.65
+Colombia,trn_pass_road,Bus,BEV,2095,20.65
+Colombia,trn_pass_road,Bus,BEV,2100,20.65
+Colombia,trn_pass,Passenger Rail,BEV,1975,250
+Colombia,trn_pass,Passenger Rail,BEV,1990,250
+Colombia,trn_pass,Passenger Rail,BEV,2005,250
+Colombia,trn_pass,Passenger Rail,BEV,2010,250
+Colombia,trn_pass,Passenger Rail,BEV,2015,250
+Colombia,trn_pass,Passenger Rail,BEV,2020,250
+Colombia,trn_pass,Passenger Rail,BEV,2025,250
+Colombia,trn_pass,Passenger Rail,BEV,2030,250
+Colombia,trn_pass,Passenger Rail,BEV,2035,250
+Colombia,trn_pass,Passenger Rail,BEV,2040,250
+Colombia,trn_pass,Passenger Rail,BEV,2045,250
+Colombia,trn_pass,Passenger Rail,BEV,2050,250
+Colombia,trn_pass,Passenger Rail,BEV,2055,250
+Colombia,trn_pass,Passenger Rail,BEV,2060,250
+Colombia,trn_pass,Passenger Rail,BEV,2065,250
+Colombia,trn_pass,Passenger Rail,BEV,2070,250
+Colombia,trn_pass,Passenger Rail,BEV,2075,250
+Colombia,trn_pass,Passenger Rail,BEV,2080,250
+Colombia,trn_pass,Passenger Rail,BEV,2085,250
+Colombia,trn_pass,Passenger Rail,BEV,2090,250
+Colombia,trn_pass,Passenger Rail,BEV,2095,250
+Colombia,trn_pass,Passenger Rail,BEV,2100,250
