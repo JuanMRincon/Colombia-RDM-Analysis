@@ -155,6 +155,7 @@ GWP<-read.csv('C:/Users/Juan Manuel Rincon R/Desktop/Colombia-RDM-Analysis/GWP.c
 #Import Reference tables
 CF<-read.csv('C:/Users/Juan Manuel Rincon R/Desktop/Colombia-RDM-Analysis/CorreccionFactor.csv', header = TRUE, sep = ",", dec = ".")
 #####VKT
+load_factors <- read.csv('C:/Users/Juan Manuel Rincon R/Desktop/Colombia-RDM-Analysis/L254.StubTranTechLoadFactor.csv', skip=1) %>% filter(region == "Colombia")  
 ##load_factors%>%rename(sector=supplysector, subsector = tranSubsector, technology = stub.technology)
 names(load_factors)[2]<-"sector"
 names(load_factors)[3]<-"subsector"
